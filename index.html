@@ -1,1 +1,45 @@
-
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolo Interesse Composto</title>
+    <script>
+        function calcolaInteresse() {
+            let investimento = parseFloat(document.getElementById("investimento").value);
+            let risparmioMensile = parseFloat(document.getElementById("risparmio").value);
+            let crescitaAnnuale = parseFloat(document.getElementById("crescita").value) / 100;
+            let anni = parseInt(document.getElementById("anni").value);
+           
+            let totaleInvestito = investimento;
+            let saldo = investimento;
+            let crescitaMensile = crescitaAnnuale / 12;
+            let mesi = anni * 12;
+           
+            for (let i = 0; i < mesi; i++) {
+                saldo += risparmioMensile;
+                saldo += saldo * crescitaMensile;
+                totaleInvestito += risparmioMensile;
+            }
+           
+            let interesseComposto = saldo - totaleInvestito;
+           
+            document.getElementById("risultato").innerHTML = `
+                <p>Risultato dopo ${anni} anni (${mesi} mesi):</p>
+                <p><strong>Totale: </strong>${saldo.toFixed(2)} euro</p>
+                <p><strong>Quota Investita: </strong>${totaleInvestito.toFixed(2)} euro</p>
+                <p><strong>Interesse Composto: </strong>${interesseComposto.toFixed(2)} euro</p>
+            `;
+        }
+    </script>
+</head>
+<body>
+    <h2>Calcolo Interesse Composto</h2>
+    <label>Investimento iniziale (€): </label><input type="number" id="investimento" value="1000"><br>
+    <label>Risparmio mensile (€): </label><input type="number" id="risparmio" value="0"><br>
+    <label>Crescita annuale (%): </label><input type="number" id="crescita" value="10"><br>
+    <label>Durata (anni): </label><input type="number" id="anni" value="10"><br>
+    <button onclick="calcolaInteresse()">Calcola</button>
+    <div id="risultato"></div>
+</body>
+</html>
